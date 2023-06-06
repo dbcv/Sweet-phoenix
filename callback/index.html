@@ -2,8 +2,27 @@
 <head>
 <script>
 const params = new URLSearchParams(window.location.search);
-const paramValue = params.get('code');
-console.log(paramValue);
+const mycode = params.get('code');
+const postData = {
+        "client_id": "699929dc93736f263256",
+        "client_secret": "75f282387a17d5a5fe5a8dd1218a5d14194a3ee3",
+        "code": mycode,
+    }
+console.log(postData)
+fetch("https://github.com/login/oauth/access_token", {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postData)
+})
+        .then(response => response.json())
+        .then(data => {
+            // 受け取ったデータを処理する
+            console.log(data);
+        })
+        .catch(error => {
+            // エラーハンドリング
+            console.error(error);
+        });
 </script>
 </head>
 <body>
