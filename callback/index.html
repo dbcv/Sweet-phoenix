@@ -1,7 +1,9 @@
 <html>
 <head>
 <script>
-
+const params = new URLSearchParams(window.location.search);
+const paramValue = params.get('code');
+console.log(paramValue);
 </script>
 </head>
 <body>
