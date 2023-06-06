@@ -3,7 +3,7 @@ name: Fetch Firebase Storage File
 on:
   push:
     branches:
-      - main
+      - main2
 
 jobs:
   fetch-file:
