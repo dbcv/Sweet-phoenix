@@ -1,4 +1,44 @@
-<p>Github Login</p>
-<a href="https://github.com/login/oauth/authorize?client_id=699929dc93736f263256"><button>
-                ログイン
-</button></a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub App on GitHub Pages using Web Application Flow</title>
+</head>
+<body>
+  <h1>GitHub App on GitHub Pages using Web Application Flow</h1>
+  <input type="button" id="login" value="GitHub Login">
+  <div id="success"></div>
+  <script type="text/javascript" src="./components/jquery.min.js"></script>
+  <script type="text/javascript" src="./components/oauth.min.js"></script>
+  <script>
+  $(function() {
+    $('#login').click(function() {
+      OAuth.initialize('');
+      OAuth.redirect('github', 'https://dbcv.github.io/Sweet-phoenix/#callback');
+    });
+
+    if (location.hash === '#callback') {
+      location.hash = '';
+      OAuth.callback('github')
+        .done(function(res) {
+          res.get('/user')
+            .done(function(res) {
+              var result = $('<div>')
+                .append($('<div>').text('Hello, ' + res.login + '!'))
+                .append($('<img>').attr('src', res.avatar_url));
+              $('#success').html(result);
+            })
+            .fail(function(res) {
+              window.alert('Failed to get usre info: see console for details');
+              console.dir(err);
+            })
+        })
+        .fail(function(err) {
+          window.alert('Failed to authorization: see console for details');
+          console.dir(err);
+        });
+    }
+  });
+  </script>
+</body>
+</html>
